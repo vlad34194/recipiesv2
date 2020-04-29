@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Recipie</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+<header>
+
+    <div class="container">
+        <div class="form-group">
+            <a href="/recipies" button type="button" class="btn btn-primary btn-light btn-lg">Home</a>
+            <a href="/recipies/soup" button type="button" class="btn btn-secondary">Soup</a>
+            <a href="/recipies/mainDish" button type="button" class="btn btn-secondary  ">Main Dish</a>
+            <a href="/recipies/salad" button type="button" class="btn btn-secondary ">Salad</a>
+            <a href="/recipies/dessert" button type="button" class="btn btn-secondary ">Dessert</a>
+            <a href="/recipies/misc" button type="button" class="btn btn-secondary ">Miscellaneous</a>
+            <a href="/recipies/add" class="btn btn-primary mr-sm-2">Add Recepies</a>
+            <a href="/recipies/about-me" class="btn btn-secondary my-2 my-sm-0">About Me</a>
+
+        </div>
+    </div>
+</header>
+<h2 style="font-style:italic" align="center">Edit your recipe</h2>
+<div class="container">
+    <form th:action="@{/recipies/{id}/edit(id=${recipieEdit.id})}" th:object="${recipieEdit}" method="POST"
+          enctype="multipart/form-data">
+        <fieldset>
+            <div style="display:none">
+                <input readonly type="hidden" th:text="*{id}" th:field="*{id}" th:value="*{id}"/>
+            </div>
+            <div class="form-group">
+                <h3>Recipe Name</h3>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Name" th:field="*{recipieName}">
+                    <span th:if="${#fields.hasErrors('recipieName')}" th:errors="*{recipieName}"
+                          class="text-danger"></span>
+                </div>
+            </div>
+
+            <h3>Short Description</h3>
+
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Description" th:field="*{shortDescription}">
+                <span th:if="${#fields.hasErrors('shortDescription')}" th:errors="*{shortDescription}"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="form-group ">
+                <h3>Ingredients</h3>
+                <div class="form-group">
+                    <textarea class="form-control" placeholder="Ingredients" th:field="*{ingredients}"></textarea>
+                    <span th:if="${#fields.hasErrors('ingredients')}" th:errors="*{ingredients}"
+                          class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group ">
+                <h3>Directions</h3>
+                <div class="form-group">
+                <textarea class="form-control" value="Insert directions here" placeholder="Directions"
+                          th:field="*{directions}"></textarea>
+                    <span th:if="${#fields.hasErrors('directions')}" th:errors="*{directions}"
+                          class="text-danger"></span>
+                </div>
+            </div>
+            <div style="display:none">
+                <input name="date" th:value="${recipieEdit.dateCreated}" th:field="*{dateCreated}"/>
+                <input name="date" th:value="${editedDate}" th:field="*{lastModified}"/>
+            </div>
+            <div class="custom-file">
+                <h3>Photo</h3>
+                <input type="file" accept="image/x-png,image/gif,image/jpeg" class="form-control" placeholder="Image"
+                       th:field="*{image}">
+                <span th:if="${#fields.hasErrors('image')}" th:errors="*{image}" class="text-danger"></span>
+
+                <h3>Category</h3>
+                <select name="Category">
+                    <option th:each="categoryFive : ${T(ro.siit.recipiesv2.model.Category).values()}"
+                            th:value="${categoryFive}" th:text="${categoryFive}"></option>
+                </select>
+                <form th:action="@{/recipies/{id}/}" method="POST">
+                    <input type="hidden" name="id" th:value="${recipieEdit.id}"/>
+                    <a th:href="@{/recipies}" class="btn btn-default">Cancel</a>
+                    <input class="btn btn-primary" type="submit" value="Update">
+                </form>
+
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+</div>
+</body>
+</html>

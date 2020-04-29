@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:big="http://www.w3.org/1999/XSL/Transform" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>Recipies</title>
+    <meta content="6"/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+
+
+
+
+    </style>
+</head>
+<body>
+<header>
+
+    <div class="container">
+        <div class="form-group">
+            <a href="/recipies" button type="button" class="btn btn-primary btn-light btn-lg">Home</a>
+            <a href="/recipies/soup" button type="button" class="btn btn-secondary">Soup</a>
+            <a href="/recipies/mainDish" button type="button" class="btn btn-secondary  ">Main Dish</a>
+            <a href="/recipies/salad" button type="button" class="btn btn-secondary ">Salad</a>
+            <a href="/recipies/dessert" button type="button" class="btn btn-secondary ">Dessert</a>
+            <a href="/recipies/misc" button type="button" class="btn btn-secondary ">Miscellaneous</a>
+            <a href="/recipies/add" class="btn btn-primary mr-sm-2">Add Recepies</a>
+            <a href="/recipies/about-me" class="btn btn-secondary my-2 my-sm-0">About Me</a>
+
+        </div>
+    </div>
+</header>
+
+<main role="main">
+<!--    <div>-->
+<!--        <nav aria-label="Navigation">-->
+<!--            <ul class="pagination justify-content-end">-->
+<!--                <li class="page-item" th:each="i : ${#numbers.sequence(0, recipieAdd.totalPages-1)}" >-->
+<!--                    <a th:href="@{recipies(recipieAdd=${i})}" th:text="${i}" class="nav-link" th:classappend="${currentPage}==${i}?'active': ''"></a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </nav>-->
+<!--    </div>-->
+
+    <div class="container">
+        <div th:if="${not recipieAdd.empty}">
+            <div class="album py-5 bg-light">
+                <div class="row">
+                    <th>
+                    <td th:each="reteta: ${recipieAdd}">
+                    </th>
+                    <div class="col-md-4 d-flex">
+                        <div class="card mb-4 shadow-sm flex-fill">
+                            <a th:href="@{/recipies/{id}/view(id=${reteta.id})}">
+                                <img class="bd-placeholder-img card-img-top"
+                                     th:src="@{'data:image/png;base64,'+${reteta.image}}" width="100%" height="225"
+                                     xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"/>
+                            </a>
+                            <a th:href="@{/recipies/{id}/view(id=${reteta.id})}">
+                                <h5 class="card-title" th:text="${reteta.recipieName}"></h5>
+                            </a>
+                            <div style="display:none">
+                                <h6 class="card-subtitle mb-2 text-muted" th:text="${reteta.dateCreated}"></h6>
+                            </div>
+                            <strong th:text="${reteta.shortDescription}"/>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 th:if="${recipieAdd.empty}">No recipies in the database, click <a th:href="@{/recipies}">here</a> to
+                    try again</h2>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

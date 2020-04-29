@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Recipie</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+<header>
+
+    <div class="container">
+        <div class="form-group">
+            <a href="/recipies" button type="button" class="btn btn-primary btn-light btn-lg">Home</a>
+            <a href="/recipies/soup" button type="button" class="btn btn-secondary">Soup</a>
+            <a href="/recipies/mainDish" button type="button" class="btn btn-secondary  ">Main Dish</a>
+            <a href="/recipies/salad" button type="button" class="btn btn-secondary ">Salad</a>
+            <a href="/recipies/dessert" button type="button" class="btn btn-secondary ">Dessert</a>
+            <a href="/recipies/add" class="btn btn-primary mr-sm-2">Add Recepies</a>
+            <a href="/recipies/about-me" class="btn btn-secondary my-2 my-sm-0">About Me</a>
+
+        </div>
+    </div>
+</header>
+<h2 style="font-style:italic" align="center">New Recipe Details</h2>
+<div class="container">
+    <form th:action="@{add}" th:object="${recipieAdd}" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <h3>Recipe Name</h3>
+            <div class="form-group">
+                <input type="text" class="form-control" th:field="*{recipieName}">
+                <span th:if="${#fields.hasErrors('recipieName')}" th:errors="*{recipieName}" class="text-danger"></span>
+                <small></small>
+            </div>
+        </div>
+
+        <h3>Short Description</h3>
+
+        <div class="form-group">
+            <input type="text" class="form-control" th:field="*{shortDescription}">
+            <span th:if="${#fields.hasErrors('shortDescription')}" th:errors="*{shortDescription}"
+                  class="text-danger"></span>
+
+        </div>
+
+        <div class="form-group ">
+            <h3>Ingredients</h3>
+            <div class="form-group">
+                <textarea class="form-control" th:field="*{ingredients}"></textarea>
+                <span th:if="${#fields.hasErrors('ingredients')}" th:errors="*{ingredients}" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group ">
+            <h3>Directions</h3>
+            <div class="form-group">
+                <textarea class="form-control" value="Insert directions here" placeholder="Directions"
+                          th:field="*{directions}"></textarea>
+                <span th:if="${#fields.hasErrors('directions')}" th:errors="*{directions}" class="text-danger"></span>
+
+            </div>
+        </div>
+        <div class="form-group" style="display:none">
+            <input type="date" class="form-control" th:value="${#todayDate}" th:field="*{dateCreated}">
+        </div>
+        <div class="custom-file">
+            <h3>Photo</h3>
+            <input type="file" accept="image/x-png,image/gif,image/jpeg" class="form-control" placeholder="Image"
+                   th:field="*{image}">
+            <span th:if="${#fields.hasErrors('image')}" th:errors="*{image}" class="text-danger"></span>
+            <h3>Category</h3>
+            <select name="Category">
+                <option th:each="categoryFive : ${T(ro.siit.recipiesv2.model.Category).values()}"
+                        th:value="${categoryFive}" th:text="${categoryFive}"></option>
+            </select>
+
+            <input class="btn btn-danger" type="reset" value="Clear">
+            <input class="btn btn-primary" type="submit" value="Save">
+
+        </div>
+    </form>
+</div>
+</body>
+</html>

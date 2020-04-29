@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>View</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="form-group">
+            <a href="/recipies" button type="button" class="btn btn-primary btn-light btn-lg">Home</a>
+            <a href="/recipies/soup" button type="button" class="btn btn-secondary">Soup</a>
+            <a href="/recipies/mainDish" button type="button" class="btn btn-secondary  ">Main Dish</a>
+            <a href="/recipies/salad" button type="button" class="btn btn-secondary ">Salad</a>
+            <a href="/recipies/dessert" button type="button" class="btn btn-secondary ">Dessert</a>
+            <a href="/recipies/misc" button type="button" class="btn btn-secondary ">Miscellaneous</a>
+            <a href="/recipies/add" class="btn btn-primary mr-sm-2">Add Recepies</a>
+            <a href="/recipies/about-me" class="btn btn-secondary my-2 my-sm-0">About Me</a>
+
+        </div>
+    </div>
+</header>
+<div class="album py-5 bg-light">
+    <div class="container">
+
+        <form th:action="@{/recipies/{id}/view}" th:object="${recipieView}" method="POST" enctype="multipart/form-data">
+            <th>
+            <td th:each="reteta: ${recipieView}">
+            </th>
+            <table>
+                <tr>
+                    <th><h1><strong th:text="${reteta.recipieName}"></strong></h1></th>
+                    <div class="recipe-info">
+                        <th><small>Publishied</small> <small th:text="${recipieView.dateCreated}"></small></th>
+                        <th><small>Update</small> <small th:text="${recipieView.lastModified}"></small></th>
+                        <div class="btn-group">
+                        </div>
+                        </th>
+                    </div>
+                </tr>
+
+                <tr>
+
+                </tr>
+            </table>
+            <div class="wprm-recipe-image wprm-block-image-normal">
+                <img class="bd-placeholder-img card-img-top" style="width:50%;height:400px"
+                     th:src="@{'data:image/png;base64,'+${reteta.image}}" xmlns="http://www.w3.org/2000/svg"
+                     preserveAspectRatio="xMidYMid slice">
+                <h4 style="font-style:italic">Ingredients:</h4>
+                <p class="ml-5" th:utext="${#strings.replace(reteta.ingredients, T(System).getProperty('line.separator'), '&lt;br /&gt;')}"></p>
+            </div>
+
+
+
+            <div class="dir">
+                <h4 style="font-style:italic">Directions:</h4>
+                <strong th:text="${reteta.directions}"></strong>
+            </div>
+            <div class="btn-group">
+                <form th:action="@{/{id}/view}" method="POST"/>
+                <input type="hidden" name="idReteta" th:value="${reteta.id}"/>
+                <input class="btn btn-sm btn-outline-danger" type="submit" value="Sterge">
+                <a th:href="@{/recipies/{id}/edit(id=${reteta.id})}"
+                   class="btn btn-sm btn-outline-primary">Edit</a>
+            </div>
+
+        </form>
+    </div>
+</div>
+</body>
+</html>
